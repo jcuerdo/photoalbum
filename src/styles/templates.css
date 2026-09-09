@@ -51,58 +51,6 @@
   background: #ffffff;
 }
 
-/* Plantilla: oscura, ambiente de galería con brillo suave */
-.template-dark.album-page {
-  background-color: #0d0d0f;
-  background-image: radial-gradient(60% 45% at 50% 0%, rgba(147, 127, 208, 0.16), transparent 70%);
-}
-.template-dark .album-photo-inner {
-  border-radius: 8px;
-  box-shadow: 0 0 32px rgba(147, 127, 208, 0.28), 0 10px 22px rgba(0, 0, 0, 0.45);
-}
-.template-dark.album-page.with-borders .album-photo-inner {
-  border: 1px solid rgba(255, 255, 255, 0.16);
-}
-.template-dark.album-page.without-borders .album-photo-inner {
-  border: none;
-}
-
-/* Plantilla: editorial, tarjetas de color con numeración tipo catálogo */
-.template-editorial .album-page-grid {
-  counter-reset: photo-index;
-}
-.template-editorial .album-photo {
-  counter-increment: photo-index;
-}
-.template-editorial .album-photo-inner {
-  padding: 18px;
-  border-radius: 10px;
-  box-shadow: 0 14px 28px -14px rgba(32, 28, 48, 0.35);
-}
-.template-editorial .album-photo:nth-child(3n+1) .album-photo-inner {
-  background: #efecfb;
-}
-.template-editorial .album-photo:nth-child(3n+2) .album-photo-inner {
-  background: #f5e2d3;
-}
-.template-editorial .album-photo:nth-child(3n) .album-photo-inner {
-  background: #e1f0e8;
-}
-.template-editorial.album-page.with-borders .album-photo-inner {
-  border: 1px solid rgba(32, 28, 48, 0.08);
-}
-.template-editorial .album-photo-inner::before {
-  content: counter(photo-index, decimal-leading-zero);
-  position: absolute;
-  top: 10px;
-  left: 14px;
-  font-size: 0.7rem;
-  font-weight: 700;
-  letter-spacing: 0.05em;
-  color: rgba(32, 28, 48, 0.45);
-  z-index: 1;
-}
-
 /* Plantilla: polaroid, fotos reveladas dispersas sobre una mesa */
 .template-polaroid.album-page {
   background-color: #f3ede0;

@@ -315,12 +315,6 @@ body {
 }
 
 .template-swatch.template-white { background: #ffffff; }
-.template-swatch.template-dark {
-  background: radial-gradient(60% 60% at 50% 20%, rgba(147, 127, 208, 0.45), #0d0d0f 70%);
-}
-.template-swatch.template-editorial {
-  background: linear-gradient(135deg, #efecfb 0 33%, #f5e2d3 33% 66%, #e1f0e8 66% 100%);
-}
 .template-swatch.template-polaroid {
   background: #fffdf9;
   border: 4px solid #fff;
