@@ -1,18 +1,17 @@
 .album-page {
   width: 500px;
-  aspect-ratio: 210 / 297;
+  min-height: calc(500px * 297 / 210);
   background: #fff;
   box-shadow: 0 20px 45px -16px rgba(93, 66, 178, 0.35);
   padding: 24px;
   display: flex;
+  align-items: flex-start;
 }
 
 .album-page-grid {
-  flex: 1;
   display: flex;
   flex-direction: column;
   width: 100%;
-  min-height: 0;
 }
 
 .album-page.with-borders .album-page-grid {
@@ -24,22 +23,16 @@
 }
 
 .album-photo {
-  flex: 1 1 0;
-  min-height: 0;
-  overflow: hidden;
-  display: flex;
-  align-items: center;
-  justify-content: center;
+  width: 100%;
 }
 
-/* .album-photo-inner hugs the rendered image exactly, so borders and
-   decorations sit on the photo itself, not on the empty letterbox space
-   left when the row's aspect ratio doesn't match the image's. */
+/* Cada foto ocupa el ancho completo de su fila y la altura que le
+   corresponda según su propia proporción, así el marco/borde se ciñe
+   siempre al tamaño real de la foto, sin hueco sobrante. */
 .album-photo-inner {
   position: relative;
-  display: inline-flex;
-  max-width: 100%;
-  max-height: 100%;
+  display: block;
+  width: 100%;
 }
 
 .album-page.with-borders .album-photo-inner {
@@ -48,11 +41,8 @@
 }
 
 .album-photo-inner img {
-  max-width: 100%;
-  max-height: 100%;
-  width: auto;
+  width: 100%;
   height: auto;
-  object-fit: contain;
   display: block;
 }
 
@@ -66,9 +56,6 @@
   background-color: #0d0d0f;
   background-image: radial-gradient(60% 45% at 50% 0%, rgba(147, 127, 208, 0.16), transparent 70%);
 }
-.template-dark .album-photo {
-  overflow: visible;
-}
 .template-dark .album-photo-inner {
   border-radius: 8px;
   box-shadow: 0 0 32px rgba(147, 127, 208, 0.28), 0 10px 22px rgba(0, 0, 0, 0.45);
@@ -81,15 +68,11 @@
 }
 
 /* Plantilla: editorial, tarjetas de color con numeración tipo catálogo */
-.template-editorial .album-photo:nth-child(3n+1) {
-  flex-grow: 1.6;
-}
 .template-editorial .album-page-grid {
   counter-reset: photo-index;
 }
 .template-editorial .album-photo {
   counter-increment: photo-index;
-  overflow: visible;
 }
 .template-editorial .album-photo-inner {
   padding: 18px;
@@ -130,9 +113,6 @@
     transparent 1px,
     transparent 3px
   );
-}
-.template-polaroid .album-photo {
-  overflow: visible;
 }
 .template-polaroid .album-photo-inner {
   background: #fffdf9;
@@ -183,9 +163,6 @@
     transparent 2px,
     transparent 6px
   );
-}
-.template-vintage .album-photo {
-  overflow: visible;
 }
 .template-vintage .album-photo-inner {
   background: #fffaf0;
@@ -254,8 +231,7 @@
   .album-page {
     box-shadow: none;
     width: 210mm;
-    height: 297mm;
-    aspect-ratio: auto;
+    min-height: 297mm;
     page-break-after: always;
   }
 
