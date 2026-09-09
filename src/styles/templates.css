@@ -1,0 +1,270 @@
+.album-page {
+  width: 500px;
+  aspect-ratio: 210 / 297;
+  background: #fff;
+  box-shadow: 0 20px 45px -16px rgba(93, 66, 178, 0.35);
+  padding: 24px;
+  display: flex;
+}
+
+.album-page-grid {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  width: 100%;
+  min-height: 0;
+}
+
+.album-page.with-borders .album-page-grid {
+  gap: 10px;
+}
+
+.album-page.without-borders .album-page-grid {
+  gap: 0;
+}
+
+.album-photo {
+  flex: 1 1 0;
+  min-height: 0;
+  overflow: hidden;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+/* .album-photo-inner hugs the rendered image exactly, so borders and
+   decorations sit on the photo itself, not on the empty letterbox space
+   left when the row's aspect ratio doesn't match the image's. */
+.album-photo-inner {
+  position: relative;
+  display: inline-flex;
+  max-width: 100%;
+  max-height: 100%;
+}
+
+.album-page.with-borders .album-photo-inner {
+  border: 4px solid #fff;
+  box-shadow: 0 0 0 1px #ddd;
+}
+
+.album-photo-inner img {
+  max-width: 100%;
+  max-height: 100%;
+  width: auto;
+  height: auto;
+  object-fit: contain;
+  display: block;
+}
+
+/* Plantilla: blanco simple, deliberadamente sin decoración */
+.template-white.album-page {
+  background: #ffffff;
+}
+
+/* Plantilla: oscura, ambiente de galería con brillo suave */
+.template-dark.album-page {
+  background-color: #0d0d0f;
+  background-image: radial-gradient(60% 45% at 50% 0%, rgba(147, 127, 208, 0.16), transparent 70%);
+}
+.template-dark .album-photo {
+  overflow: visible;
+}
+.template-dark .album-photo-inner {
+  border-radius: 8px;
+  box-shadow: 0 0 32px rgba(147, 127, 208, 0.28), 0 10px 22px rgba(0, 0, 0, 0.45);
+}
+.template-dark.album-page.with-borders .album-photo-inner {
+  border: 1px solid rgba(255, 255, 255, 0.16);
+}
+.template-dark.album-page.without-borders .album-photo-inner {
+  border: none;
+}
+
+/* Plantilla: editorial, tarjetas de color con numeración tipo catálogo */
+.template-editorial .album-photo:nth-child(3n+1) {
+  flex-grow: 1.6;
+}
+.template-editorial .album-page-grid {
+  counter-reset: photo-index;
+}
+.template-editorial .album-photo {
+  counter-increment: photo-index;
+  overflow: visible;
+}
+.template-editorial .album-photo-inner {
+  padding: 18px;
+  border-radius: 10px;
+  box-shadow: 0 14px 28px -14px rgba(32, 28, 48, 0.35);
+}
+.template-editorial .album-photo:nth-child(3n+1) .album-photo-inner {
+  background: #efecfb;
+}
+.template-editorial .album-photo:nth-child(3n+2) .album-photo-inner {
+  background: #f5e2d3;
+}
+.template-editorial .album-photo:nth-child(3n) .album-photo-inner {
+  background: #e1f0e8;
+}
+.template-editorial.album-page.with-borders .album-photo-inner {
+  border: 1px solid rgba(32, 28, 48, 0.08);
+}
+.template-editorial .album-photo-inner::before {
+  content: counter(photo-index, decimal-leading-zero);
+  position: absolute;
+  top: 10px;
+  left: 14px;
+  font-size: 0.7rem;
+  font-weight: 700;
+  letter-spacing: 0.05em;
+  color: rgba(32, 28, 48, 0.45);
+  z-index: 1;
+}
+
+/* Plantilla: polaroid, fotos reveladas dispersas sobre una mesa */
+.template-polaroid.album-page {
+  background-color: #f3ede0;
+  background-image: repeating-linear-gradient(
+    0deg,
+    rgba(0, 0, 0, 0.02) 0px,
+    rgba(0, 0, 0, 0.02) 1px,
+    transparent 1px,
+    transparent 3px
+  );
+}
+.template-polaroid .album-photo {
+  overflow: visible;
+}
+.template-polaroid .album-photo-inner {
+  background: #fffdf9;
+  padding: 10px 10px 34px;
+  box-shadow: 0 1px 2px rgba(0, 0, 0, 0.15), 0 18px 26px -12px rgba(0, 0, 0, 0.45);
+}
+.template-polaroid.album-page.without-borders .album-photo-inner {
+  box-shadow: 0 1px 2px rgba(0, 0, 0, 0.1), 0 10px 16px -10px rgba(0, 0, 0, 0.3);
+}
+.template-polaroid .album-photo:nth-child(3n+1) .album-photo-inner {
+  transform: rotate(-3deg);
+}
+.template-polaroid .album-photo:nth-child(3n+2) .album-photo-inner {
+  transform: rotate(2deg);
+}
+.template-polaroid .album-photo:nth-child(3n) .album-photo-inner {
+  transform: rotate(-1.5deg);
+}
+.template-polaroid .album-photo-inner::before {
+  content: '';
+  position: absolute;
+  top: 4px;
+  left: 50%;
+  transform: translateX(-50%);
+  width: 13px;
+  height: 13px;
+  border-radius: 50%;
+  background: radial-gradient(circle at 35% 30%, #f08a8a, #b23b3b 70%);
+  box-shadow: 0 2px 3px rgba(0, 0, 0, 0.45);
+  z-index: 2;
+}
+.template-polaroid .album-photo-inner::after {
+  content: '';
+  position: absolute;
+  inset: 10px 10px 34px 10px;
+  background: linear-gradient(115deg, rgba(255, 255, 255, 0.5) 0%, rgba(255, 255, 255, 0) 30%);
+  pointer-events: none;
+  z-index: 1;
+}
+
+/* Plantilla: álbum vintage, montaje de época con esquineras */
+.template-vintage.album-page {
+  background-color: #ecdfc0;
+  background-image: repeating-linear-gradient(
+    45deg,
+    rgba(150, 130, 90, 0.07) 0px,
+    rgba(150, 130, 90, 0.07) 2px,
+    transparent 2px,
+    transparent 6px
+  );
+}
+.template-vintage .album-photo {
+  overflow: visible;
+}
+.template-vintage .album-photo-inner {
+  background: #fffaf0;
+  padding: 6px;
+  box-shadow: 0 14px 22px -12px rgba(60, 45, 20, 0.45);
+}
+.template-vintage .album-photo:nth-child(odd) .album-photo-inner {
+  transform: rotate(-1deg);
+}
+.template-vintage .album-photo:nth-child(even) .album-photo-inner {
+  transform: rotate(1deg);
+}
+.template-vintage .album-photo-inner img {
+  filter: sepia(0.4) contrast(0.95) brightness(1.02);
+}
+.template-vintage.album-page.with-borders .album-photo-inner {
+  box-shadow: 0 0 0 2px #fffaf0, 0 0 0 3px #8a7a55, 0 14px 22px -12px rgba(60, 45, 20, 0.45);
+}
+.template-vintage .album-photo-inner::before,
+.template-vintage .album-photo-inner::after {
+  content: '';
+  position: absolute;
+  width: 20px;
+  height: 20px;
+  z-index: 2;
+}
+.template-vintage .album-photo-inner::before {
+  top: 0;
+  left: 0;
+  background: linear-gradient(135deg, #a9946a, #8a7a55 65%);
+  clip-path: polygon(0 0, 100% 0, 0 100%);
+  box-shadow: 1px 1px 2px rgba(0, 0, 0, 0.3);
+}
+.template-vintage .album-photo-inner::after {
+  bottom: 0;
+  right: 0;
+  background: linear-gradient(-45deg, #a9946a, #8a7a55 65%);
+  clip-path: polygon(100% 100%, 100% 0, 0 100%);
+  box-shadow: -1px -1px 2px rgba(0, 0, 0, 0.3);
+}
+
+@media print {
+  .no-print {
+    display: none !important;
+  }
+
+  .app-layout {
+    display: block;
+    padding: 0;
+  }
+
+  .app-preview-panel {
+    background: none;
+    border: none;
+    box-shadow: none;
+    padding: 0;
+    min-height: 0;
+  }
+
+  .album-preview {
+    background: none;
+    padding: 0;
+    gap: 0;
+  }
+
+  .album-page {
+    box-shadow: none;
+    width: 210mm;
+    height: 297mm;
+    aspect-ratio: auto;
+    page-break-after: always;
+  }
+
+  .album-page:last-child {
+    page-break-after: avoid;
+  }
+
+  @page {
+    size: A4;
+    margin: 0;
+  }
+}
