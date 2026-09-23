@@ -32,7 +32,14 @@ export async function savePhotos(photos) {
     const store = tx.objectStore(STORE_NAME)
     store.clear()
     photos.forEach((photo, index) => {
-      store.put({ id: photo.id, name: photo.name, file: photo.file, order: index })
+      store.put({
+        id: photo.id,
+        name: photo.name,
+        file: photo.file,
+        order: index,
+        width: photo.width,
+        height: photo.height,
+      })
     })
     tx.oncomplete = () => resolve()
     tx.onerror = () => reject(tx.error)

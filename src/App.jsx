@@ -8,6 +8,15 @@ import { loadPhotos, savePhotos } from './photoStore.js'
 
 const CONFIG_STORAGE_KEY = 'photoalbum:config'
 
+function loadImageDimensions(url) {
+  return new Promise((resolve) => {
+    const img = new Image()
+    img.onload = () => resolve({ width: img.naturalWidth, height: img.naturalHeight })
+    img.onerror = () => resolve({ width: 0, height: 0 })
+    img.src = url
+  })
+}
+
 function loadConfig() {
   try {
     const raw = localStorage.getItem(CONFIG_STORAGE_KEY)
@@ -31,15 +40,18 @@ export default function App() {
   // guardado (más abajo) sobrescriba lo persistido con un array vacío
   // mientras esta carga asíncrona todavía está en curso.
   useEffect(() => {
-    loadPhotos().then((records) => {
-      setPhotos(
-        records.map((record) => ({
-          id: record.id,
-          name: record.name,
-          file: record.file,
-          url: URL.createObjectURL(record.file),
-        })),
+    loadPhotos().then(async (records) => {
+      const loaded = await Promise.all(
+        records.map(async (record) => {
+          const url = URL.createObjectURL(record.file)
+          const dims =
+            record.width && record.height
+              ? { width: record.width, height: record.height }
+              : await loadImageDimensions(url)
+          return { id: record.id, name: record.name, file: record.file, url, ...dims }
+        }),
       )
+      setPhotos(loaded)
       setIsPhotosLoaded(true)
     })
   }, [])
@@ -68,8 +80,16 @@ export default function App() {
       url: URL.createObjectURL(file),
       file,
       name: file.name,
+      width: 0,
+      height: 0,
     }))
     setPhotos((prev) => [...prev, ...newPhotos])
+
+    newPhotos.forEach((photo) => {
+      loadImageDimensions(photo.url).then(({ width, height }) => {
+        setPhotos((prev) => prev.map((p) => (p.id === photo.id ? { ...p, width, height } : p)))
+      })
+    })
   }
 
   function removePhoto(id) {
