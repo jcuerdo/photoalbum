@@ -34,6 +34,7 @@ export default function App() {
   const [template, setTemplate] = useState(initialConfig.template ?? TEMPLATES[0].id)
   const [photosPerPage, setPhotosPerPage] = useState(initialConfig.photosPerPage ?? 4)
   const [showBorders, setShowBorders] = useState(initialConfig.showBorders ?? true)
+  const [showMargins, setShowMargins] = useState(initialConfig.showMargins ?? true)
   const [error, setError] = useState('')
 
   // Carga inicial desde IndexedDB. isPhotosLoaded evita que el efecto de
@@ -64,9 +65,9 @@ export default function App() {
   useEffect(() => {
     localStorage.setItem(
       CONFIG_STORAGE_KEY,
-      JSON.stringify({ template, photosPerPage, showBorders }),
+      JSON.stringify({ template, photosPerPage, showBorders, showMargins }),
     )
-  }, [template, photosPerPage, showBorders])
+  }, [template, photosPerPage, showBorders, showMargins])
 
   function addFiles(files) {
     const validImages = files.filter((file) => file.type.startsWith('image/'))
@@ -139,6 +140,8 @@ export default function App() {
             onPhotosPerPageChange={setPhotosPerPage}
             showBorders={showBorders}
             onShowBordersChange={setShowBorders}
+            showMargins={showMargins}
+            onShowMarginsChange={setShowMargins}
           />
 
           <button className="print-button" onClick={handlePrint}>
@@ -153,6 +156,7 @@ export default function App() {
               template={template}
               photosPerPage={photosPerPage}
               showBorders={showBorders}
+              showMargins={showMargins}
             />
           ) : (
             <div className="preview-empty no-print">

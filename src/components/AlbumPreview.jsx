@@ -64,9 +64,9 @@ function groupIntoRows(pagePhotos, containerWidthPx, containerHeightPx) {
   return rows
 }
 
-function computePageLayout(pagePhotos, template, showBorders) {
+function computePageLayout(pagePhotos, template, showBorders, showMargins) {
   const chrome = getTemplateChrome(template, showBorders)
-  const gap = showBorders ? GAP_PX : 0
+  const gap = showMargins ? GAP_PX : 0
 
   const containerWidthPx = PAGE_WIDTH_MM * MM_TO_PX - 2 * PAGE_PADDING_PX
   const containerHeightPx = PAGE_HEIGHT_MM * MM_TO_PX - 2 * PAGE_PADDING_PX
@@ -96,7 +96,7 @@ function computePageLayout(pagePhotos, template, showBorders) {
   )
 }
 
-export default function AlbumPreview({ photos, template, photosPerPage, showBorders }) {
+export default function AlbumPreview({ photos, template, photosPerPage, showBorders, showMargins }) {
   if (photos.length === 0) return null
 
   const pages = paginate(photos, photosPerPage)
@@ -104,12 +104,12 @@ export default function AlbumPreview({ photos, template, photosPerPage, showBord
   return (
     <section className="album-preview">
       {pages.map((pagePhotos, pageIndex) => {
-        const rows = computePageLayout(pagePhotos, template, showBorders)
+        const rows = computePageLayout(pagePhotos, template, showBorders, showMargins)
 
         return (
           <div
             key={pageIndex}
-            className={`album-page template-${template} ${showBorders ? 'with-borders' : 'without-borders'}`}
+            className={`album-page template-${template} ${showBorders ? 'with-borders' : 'without-borders'} ${showMargins ? 'with-margins' : 'without-margins'}`}
           >
             <div className="album-page-grid" data-count={pagePhotos.length}>
               {rows.map((row, rowIndex) => (

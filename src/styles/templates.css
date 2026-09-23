@@ -36,11 +36,11 @@
   width: 100%;
 }
 
-.album-page.with-borders .album-page-grid {
+.album-page.with-margins .album-page-grid {
   gap: 10px;
 }
 
-.album-page.without-borders .album-page-grid {
+.album-page.without-margins .album-page-grid {
   gap: 0;
 }
 
@@ -48,11 +48,11 @@
   display: flex;
 }
 
-.album-page.with-borders .album-page-row {
+.album-page.with-margins .album-page-row {
   gap: 10px;
 }
 
-.album-page.without-borders .album-page-row {
+.album-page.without-margins .album-page-row {
   gap: 0;
 }
 

@@ -7,6 +7,8 @@ export default function ConfigPanel({
   onPhotosPerPageChange,
   showBorders,
   onShowBordersChange,
+  showMargins,
+  onShowMarginsChange,
 }) {
   return (
     <section className="config-panel">
@@ -48,7 +50,16 @@ export default function ConfigPanel({
           checked={showBorders}
           onChange={(event) => onShowBordersChange(event.target.checked)}
         />
-        Mostrar bordes y márgenes entre fotos
+        Mostrar bordes en las fotos
+      </label>
+
+      <label className="config-field config-checkbox">
+        <input
+          type="checkbox"
+          checked={showMargins}
+          onChange={(event) => onShowMarginsChange(event.target.checked)}
+        />
+        Mostrar márgenes entre fotos
       </label>
     </section>
   )
