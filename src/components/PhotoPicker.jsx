@@ -15,15 +15,29 @@ export default function PhotoPicker({ onFilesSelected }) {
     onFilesSelected(Array.from(event.dataTransfer.files))
   }
 
+  function handlePaste(event) {
+    const images = Array.from(event.clipboardData?.items ?? [])
+      .filter((item) => item.kind === 'file' && item.type.startsWith('image/'))
+      .map((item) => item.getAsFile())
+      .filter(Boolean)
+
+    if (images.length === 0) return
+
+    event.preventDefault()
+    onFilesSelected(images)
+  }
+
   return (
     <section
       className={`photo-picker ${isDragging ? 'is-dragging' : ''}`}
+      tabIndex={0}
       onDragOver={(event) => {
         event.preventDefault()
         setIsDragging(true)
       }}
       onDragLeave={() => setIsDragging(false)}
       onDrop={handleDrop}
+      onPaste={handlePaste}
     >
       <svg
         className="photo-picker-icon"
@@ -37,7 +51,7 @@ export default function PhotoPicker({ onFilesSelected }) {
         <circle cx="8.5" cy="10" r="1.75" />
         <path d="M3 16.5l5-4.5 3.5 3 4-3.5L21 15" />
       </svg>
-      <p>Arrastra fotos aquí o</p>
+      <p>Arrastra fotos aquí, haz clic y pega (Cmd/Ctrl+V) o</p>
       <button type="button" onClick={() => inputRef.current?.click()}>
         Seleccionar fotos
       </button>

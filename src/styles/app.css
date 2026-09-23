@@ -146,6 +146,11 @@ body {
   background: var(--color-accent-soft);
 }
 
+.photo-picker:focus-visible {
+  outline: 2px solid var(--color-accent);
+  outline-offset: 2px;
+}
+
 .photo-picker p {
   margin: 0 0 0.75rem;
   color: var(--color-text-muted);
